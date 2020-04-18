@@ -1,1 +1,17 @@
-<p>counter-from-service works!</p>
+<div data-testid="currentCount">
+  {{ currentCount }}
+</div>
+
+<button
+  (click)="increaseCount()"
+  data-testid="increaseBtn"
+>
+  +
+</button>
+
+<button
+  (click)="decreaseCount()"
+  data-testid="decreaseBtn"
+>
+  -
+</button>
