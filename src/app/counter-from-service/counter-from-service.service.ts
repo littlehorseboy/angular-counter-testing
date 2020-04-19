@@ -19,20 +19,13 @@ export class CounterFromServiceService {
 
   getCount() {
     return new Observable((subscriber: Subscriber<number>): void => {
-      subscriber.error(new Error('what!?'));
+      subscriber.next(1);
       subscriber.complete();
-      // subscriber.next(1);
-      // subscriber.complete();
     })
       .pipe(
         delay(1000),
         tap((value) => {
           this.currentCount = value;
-        }),
-        catchError((error) => {
-          this.currentCount = 500;
-          // return of(2);
-          return throwError(error);
         }),
       );
   }
