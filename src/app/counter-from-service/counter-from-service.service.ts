@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, of } from 'rxjs';
-import { delay, tap, map, takeUntil } from 'rxjs/operators';
+import { Observable, Subscriber, throwError, of } from 'rxjs';
+import { delay, tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,23 +18,22 @@ export class CounterFromServiceService {
   }
 
   getCount() {
-    const stopSignal$ = new Subject();
-
-    return of(1)
+    return new Observable((subscriber: Subscriber<number>): void => {
+      subscriber.error(new Error('what!?'));
+      subscriber.complete();
+      // subscriber.next(1);
+      // subscriber.complete();
+    })
       .pipe(
         delay(1000),
-        map((value) => {
-          if (!value) {
-            return value;
-          } else {
-            stopSignal$.next();
-          }
-        }),
         tap((value) => {
-          debugger;
           this.currentCount = value;
         }),
-        takeUntil(stopSignal$),
+        catchError((error) => {
+          this.currentCount = 500;
+          // return of(2);
+          return throwError(error);
+        }),
       );
   }
 }

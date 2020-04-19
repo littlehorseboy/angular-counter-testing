@@ -29,19 +29,19 @@ describe('CounterFromServiceService', () => {
     expect(service.currentCount).toBe(-3);
   });
 
-  it('使用 getCount() 取得 observable 進行訂閱取得值為 0', (done: DoneFn) => {
+  it('使用 getCount() 取得 observable 進行訂閱取得值為 1', (done: DoneFn) => {
     service.getCount().subscribe(
       (value) => {
-        debugger;
         expect(value).toBe(1);
         expect(service.currentCount).toBe(1);
+      },
+      (error) => {
+        expect(error).toEqual(new Error('what!?'));
         done();
       },
       () => {
-        debugger;
-      },
-      () => {
-        debugger;
+        expect(service.currentCount).toBe(1);
+        done();
       },
     );
   });
