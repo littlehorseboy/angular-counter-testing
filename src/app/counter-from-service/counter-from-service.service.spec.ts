@@ -32,9 +32,16 @@ describe('CounterFromServiceService', () => {
   it('使用 getCount() 取得 observable 進行訂閱取得值為 0', (done: DoneFn) => {
     service.getCount().subscribe(
       (value) => {
+        debugger;
         expect(value).toBe(1);
         expect(service.currentCount).toBe(1);
         done();
+      },
+      () => {
+        debugger;
+      },
+      () => {
+        debugger;
       },
     );
   });
